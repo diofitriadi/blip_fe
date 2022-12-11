@@ -1,0 +1,3 @@
+// Query sql untuk mengambil data-data produk beserta kategori nya untuk dilanjutkan ke pembayaran
+
+SELECT product.id, categories_name, product_name, product_image, product_price, product_desc FROM product LEFT JOIN categories ON product.categories_id = categories.id ORDER BY product_name LIMIT 5
