@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import Sidebar from '../components/Sidebar'
 import coldDishes from '../api/coldDishes'
+import hotDishes from '../api/hotDishes'
+import Swal from 'sweetalert2'
 
 const HomePage = () => {
   const [count, setCount] = useState(0)
@@ -9,6 +11,9 @@ const HomePage = () => {
   } else if (count > 20) {
     setCount(20)
   }
+
+  const [toggleButton, setToggleButton] = useState(coldDishes)
+
   return (
     <div className='bg-[#252836] flex text-[#fff] font-barlow'>
       <Sidebar />
@@ -26,16 +31,16 @@ const HomePage = () => {
           />
         </div>
         <div className='flex flex-col pt-10 pb-4'>
-          <div className='flex gap-10 text-sm'>
-            <p>Hot Dishes</p>
-            <p className='text-[#FFCA40]'>Cold Dishes</p>
-            <p>Soup</p>
-            <p>Grill</p>
-            <p>Appetizer</p>
-            <p>Dessert</p>
+          <div className='flex gap-10 text-sm h-[50px]'>
+            <button className={toggleButton === hotDishes ? 'text-[#FFCA40] border-b-2 border-[#FFCA40]' : ''} onClick={() => setToggleButton(hotDishes)}>Hot Dishes</button>
+            <button className={toggleButton === coldDishes ? 'text-[#FFCA40] border-b-2 border-[#FFCA40]' : ''} onClick={() => setToggleButton(coldDishes)}>Cold Dishes</button>
+            <button>Soup</button>
+            <button>Grill</button>
+            <button>Appetizer</button>
+            <button>Dessert</button>
           </div>
         </div>
-        <hr className='opacity-10' />
+        <hr className='-mt-[17px] opacity-10' />
         <div className='flex items-center justify-between w-full mt-5'>
           <h1>Choose dishes</h1>
           <select className='rounded bg-[#1F1D2B] border border-white border-opacity-10 px-3 py-2 text-sm'>
@@ -44,22 +49,42 @@ const HomePage = () => {
           </select>
         </div>
         <div className='flex flex-wrap justify-between'>
-          {coldDishes.map((item, index) => {
-            return (
-              <>
-                <div className='relative flex-col items-center text-sm w-[200px] h-[240px] bg-[#1F1D2B] rounded-lg transition pt-4 mt-16'>
-                  <div className='absolute bottom-5 right-[24px]'>
-                    <img src={item.image} className='rounded-full' alt="seafood" />
-                    <div className=' flex flex-col items-center gap-1 mt-5'>
-                      <p className='text-center w-[140px] h-[45px]'>{item.info}</p>
-                      <p>Rp. {item.price}.000</p>
-                      <p className='text-xs text-[#ABBBC2] mt-1'>{item.qty} bowls available</p>
+          {toggleButton === coldDishes ?
+            <>
+              {coldDishes.map((item, index) => {
+                return (
+                  <>
+                    <div className='relative flex-col items-center text-sm w-[200px] h-[240px] bg-[#1F1D2B] rounded-lg transition pt-4 mt-16'>
+                      <div className='absolute bottom-5 right-[24px]'>
+                        <img src={item.image} className='rounded-full' alt="seafood" />
+                        <div className=' flex flex-col items-center gap-1 mt-5'>
+                          <p className='text-center w-[140px] h-[45px]'>{item.info}</p>
+                          <p>Rp. {item.price}.000</p>
+                          <p className='text-xs text-[#ABBBC2] mt-1'>{item.qty} bowls available</p>
+                        </div>
+                      </div>
                     </div>
-                  </div>
-                </div>
-              </>
-            )
-          })}
+                  </>
+                )
+              })}</> :
+            <>
+              {hotDishes.map((item, index) => {
+                return (
+                  <>
+                    <div className='relative flex-col items-center text-sm w-[200px] h-[240px] bg-[#1F1D2B] rounded-lg transition pt-4 mt-16'>
+                      <div className='absolute bottom-5 right-[24px]'>
+                        <img src={item.image} className='rounded-full' alt="seafood" />
+                        <div className=' flex flex-col items-center gap-1 mt-5'>
+                          <p className='text-center w-[140px] h-[45px]'>{item.info}</p>
+                          <p>Rp. {item.price}.000</p>
+                          <p className='text-xs text-[#ABBBC2] mt-1'>{item.qty} bowls available</p>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )
+              })}
+            </>}
         </div>
       </div>
       <div className='bg-[#1F1D2B] w-3/5 ml-5 p-5 pb-9 h-full sticky top-0'>
@@ -213,6 +238,7 @@ const HomePage = () => {
             </tbody>
           </table>
         </div>
+
         <hr className='opacity-10' />
         <div className='flex flex-col gap-2 mt-4'>
           <div className='flex justify-between'>

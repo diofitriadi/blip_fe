@@ -8,7 +8,7 @@ import daluman from '../assets/img/daluman.png'
 const coldDishes = [{
   id: 1,
   image: iceCream1,
-  info: "Spicy seasoned seafood noodles",
+  info: "Ice Cream Vanilla with sugar balmon",
   price: 43,
   qty: 20
 }, {
